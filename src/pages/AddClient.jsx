@@ -1,5 +1,5 @@
 const AddClient = () => {
-  return <div>AddClient</div>;
+  return <div>New Client</div>;
 };
 
 export default AddClient;
