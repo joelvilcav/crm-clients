@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './components/Layout';
-import AddClient from './pages/AddClient';
-import Index, {loader as clientsLoader} from './pages/Index';
+import AddClient, { action as addClientAction } from './pages/AddClient';
+import Index, { loader as clientsLoader } from './pages/Index';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +19,7 @@ const router = createBrowserRouter([
       {
         path: '/clients/add-client',
         element: <AddClient />,
+        action: addClientAction,
       },
     ],
   },

@@ -1,54 +1,74 @@
 import { useLoaderData } from 'react-router-dom';
+import Client from '../components/Client';
 
 export function loader() {
   const clients = [
     {
       id: 1,
-      nombre: 'Juan',
-      telefono: 102013313,
+      name: 'Juan',
+      phone: 102013313,
       email: 'juan@juan.com',
-      empresa: 'Codigo Con Juan',
+      company: 'Codewars',
     },
     {
       id: 2,
-      nombre: 'Karen',
-      telefono: 138198313,
+      name: 'Karen',
+      phone: 138198313,
       email: 'karen@juan.com',
-      empresa: 'Codigo Con Juan',
+      company: 'Leetcode',
     },
     {
       id: 3,
-      nombre: 'Josue',
-      telefono: 31983913,
+      name: 'Josue',
+      phone: 31983913,
       email: 'josue@juan.com',
-      empresa: 'Codigo Con Juan',
+      company: 'Mercado Libre',
     },
     {
       id: 4,
-      nombre: 'Miguel',
-      telefono: 319381983,
+      name: 'Miguel',
+      phone: 319381983,
       email: 'miguel@juan.com',
-      empresa: 'Codigo Con Juan',
+      company: 'Amazon',
     },
     {
       id: 5,
-      nombre: 'Pedro',
-      telefono: 1398198938,
+      name: 'Pedro',
+      phone: 1398198938,
       email: 'pedro@juan.com',
-      empresa: 'Codigo Con Juan',
+      company: 'AWS',
     },
   ];
   return clients;
 }
 
 const Index = () => {
-  const data = useLoaderData();
-  console.log(data);
+  const clients = useLoaderData();
+  console.log(clients);
 
   return (
     <>
       <h1 className='font-black text-4xl text-blue-800'>Clients</h1>
       <p className='mt-3'>Manage the clients</p>
+
+      {clients.length ? (
+        <table className='w-full bg-white shadow mt-5'>
+          <thead className='bg-blue-800 text-white'>
+            <tr>
+              <th className='p-2'>Client</th>
+              <th className='p-2'>Contact</th>
+              <th className='p-2'>Options</th>
+            </tr>
+          </thead>
+          <tbody>
+            {clients.map((client) => (
+              <Client client={client} key={client.id} />
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>There is no clients registered yet</p>
+      )}
     </>
   );
 };
