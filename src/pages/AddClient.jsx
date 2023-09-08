@@ -1,12 +1,36 @@
-import { useNavigate, Form } from 'react-router-dom';
+import { useNavigate, Form, useActionData } from 'react-router-dom';
 import FormClient from '../components/FormClient';
+import Error from '../components/Error';
 
-export function action() {
-  console.log('submit...');
+export async function action({ request }) {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+  const email = formData.get('email');
+
+  // Validating fields
+  const error = [];
+  if (Object.values(data).includes('')) {
+    error.push('All the fields are mandatory');
+  }
+
+  let regex = new RegExp(
+    "([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"
+  );
+
+  if(!regex.test(email)){
+    error.push('Complete the email field')
+  }
+
+  // Return if there is any error
+  if (Object.keys(error).length) {
+    return error;
+  }
+
   return { ok: true };
 }
 
 const AddClient = () => {
+  const error = useActionData();
   const navigate = useNavigate();
 
   return (
@@ -23,8 +47,10 @@ const AddClient = () => {
         </button>
       </div>
 
-      <div className='bg-white shadow rounded-md md:w-3/4 mt-6 mx-auto px-5 py-10'>
-        <Form method='post'>
+      <div className='bg-white shadow rounded-md md:w-3/4 mt-6 mx-auto px-5 py-7'>
+        {error?.length && error.map((e, i) => <Error key={i}>{e}</Error>)}
+
+        <Form method='post' noValidate>
           <FormClient />
 
           <input
