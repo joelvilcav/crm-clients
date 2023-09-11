@@ -1,6 +1,10 @@
-export async function getClients(){
-    const response = await fetch(import.meta.env.VITE_API_URL);
-    const result = await response.json();
+export async function getClients() {
+  const response = await fetch(import.meta.env.VITE_API_URL);
+  const result = await response.json();
 
-    return result;
+  return result;
+}
+
+export function addClient(data) {
+  console.log(data);
 }
