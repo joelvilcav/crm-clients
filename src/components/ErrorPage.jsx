@@ -8,7 +8,7 @@ const ErrorPage = () => {
     <div className='space-y-8'>
         <h1 className='text-center text-5xl font-extrabold mt-20 text-blue-900'>CRM - Clients</h1>
         <p className='text-center font-bold text-red-700'>There was an error</p>
-        <p className='text-center font-bold text-red-700'>{error.message}</p>
+        <p className='text-center font-bold text-red-700'>{error.statusText || error.message}</p>
     </div>
     )
 };

@@ -4,6 +4,7 @@ import Client from '../components/Client';
 
 export function loader() {
   const clients = getClients();
+  console.log(clients)
   return clients;
 }
 

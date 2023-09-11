@@ -1,9 +1,20 @@
-import { useNavigate, Form, useActionData, redirect } from 'react-router-dom';
+import { Form, useNavigate, useLoaderData, useActionData, redirect } from 'react-router-dom';
+import { editClient, getClient } from '../data/clients';
 import FormClient from '../components/FormClient';
 import Error from '../components/Error';
-import { addClient } from '../data/clients';
 
-export async function action({ request }) {
+export async function loader({ params }) {
+  const client = await getClient(params.clientId);
+  if (Object.values(client).length === 0) {
+    throw new Response('', {
+      status: 404,
+      statusText: 'No results',
+    });
+  }
+  return client;
+}
+
+export async function action({ request, params }) {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
   const email = formData.get('email');
@@ -18,8 +29,8 @@ export async function action({ request }) {
     "([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"
   );
 
-  if(!regex.test(email)){
-    error.push('Complete the email field')
+  if (!regex.test(email)) {
+    error.push('Complete the email field');
   }
 
   // Return if there is any error
@@ -27,19 +38,21 @@ export async function action({ request }) {
     return error;
   }
 
-  await addClient(data);
+  //Update client
+  await editClient(params.clientId, data);
 
   return redirect('/');
 }
 
-const AddClient = () => {
-  const error = useActionData();
+const EditClient = () => {
   const navigate = useNavigate();
+  const client = useLoaderData();
+  const error = useActionData();
 
   return (
     <>
-      <h1 className='font-black text-3xl text-blue-900'>Add a new client</h1>
-      <p className='mt-3'>Complete the fields to register a new client</p>
+      <h1 className='font-black text-3xl text-blue-900'>Edit client</h1>
+      <p className='mt-3'>Complete the fields to edit a client</p>
 
       <div className='flex justify-end'>
         <button
@@ -54,12 +67,12 @@ const AddClient = () => {
         {error?.length && error.map((e, i) => <Error key={i}>{e}</Error>)}
 
         <Form method='post' noValidate>
-          <FormClient />
+          <FormClient client={client} />
 
           <input
             type='submit'
             className='mt-3 w-full bg-blue-800 p-2 uppercase font-bold text-white text-sm'
-            value='Send'
+            value='Save'
           />
         </Form>
       </div>
@@ -67,4 +80,4 @@ const AddClient = () => {
   );
 };
 
-export default AddClient;
+export default EditClient;

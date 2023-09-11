@@ -1,11 +1,12 @@
 {
   "clients": [
     {
-      "id": 1,
-      "name": "Juan",
-      "phone": 102013313,
+      "name": "Juan 2",
+      "company": "Codewars",
       "email": "juan@juan.com",
-      "company": "Codewars"
+      "phone": "102013313",
+      "notes": "QWEas",
+      "id": 1
     },
     {
       "id": 2,
@@ -34,6 +35,14 @@
       "phone": 1398198938,
       "email": "pedro@juan.com",
       "company": "AWS"
+    },
+    {
+      "name": "Joel",
+      "company": "RYG",
+      "email": "jvilca@rygsol.com",
+      "phone": "123",
+      "notes": "qwe",
+      "id": 6
     }
   ]
 }
