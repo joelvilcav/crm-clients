@@ -1,4 +1,10 @@
-import { useNavigate } from 'react-router-dom';
+import { Form, useNavigate, redirect } from 'react-router-dom';
+import { destroyClient } from '../data/clients';
+
+export async function action({ params }) {
+  await destroyClient(params.clientId);
+  return redirect('/');
+}
 
 const Client = ({ client }) => {
   const navigate = useNavigate();
@@ -30,12 +36,23 @@ const Client = ({ client }) => {
         >
           Edit
         </button>
-        <button
-          type='button'
-          className='text-red-800 hover:text-red-700 uppercase font-bold text-xs'
+
+        <Form
+          method='post'
+          action={`/clients/${id}/destroy`}
+          onSubmit={(e) => {
+            if (!confirm('Are you sure you want to delete this row?')) {
+              e.preventDefault();
+            }
+          }}
         >
-          Delete
-        </button>
+          <button
+            type='submit'
+            className='text-red-800 hover:text-red-700 uppercase font-bold text-xs'
+          >
+            Delete
+          </button>
+        </Form>
       </td>
     </tr>
   );

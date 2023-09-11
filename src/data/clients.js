@@ -27,7 +27,7 @@ export async function addClient(data) {
   }
 }
 
-export async function editClient(id, data){
+export async function editClient(id, data) {
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/${id}`, {
       method: 'PUT',
@@ -35,6 +35,17 @@ export async function editClient(id, data){
       headers: {
         'Content-Type': 'application/json',
       },
+    });
+    await response.json();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function destroyClient(id) {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/${id}`, {
+      method: 'DELETE',
     });
     await response.json();
   } catch (error) {

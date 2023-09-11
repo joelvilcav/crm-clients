@@ -1,14 +1,6 @@
 {
   "clients": [
     {
-      "name": "Juan 2",
-      "company": "Codewars",
-      "email": "juan@juan.com",
-      "phone": "102013313",
-      "notes": "QWEas",
-      "id": 1
-    },
-    {
       "id": 2,
       "name": "Karen",
       "phone": 138198313,
